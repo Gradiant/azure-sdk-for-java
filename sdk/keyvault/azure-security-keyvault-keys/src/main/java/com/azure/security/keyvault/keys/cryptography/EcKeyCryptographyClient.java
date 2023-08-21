@@ -49,7 +49,7 @@ class EcKeyCryptographyClient extends LocalKeyCryptographyClient {
     EcKeyCryptographyClient(JsonWebKey key, CryptographyClientImpl serviceClient) {
         super(serviceClient);
 
-        this.provider = Security.getProvider("SunEC");
+        this.provider = Security.getProvider("BC");
         this.keyPair = key.toEc(key.hasPrivateKey(), provider);
         this.serviceClient = serviceClient;
     }

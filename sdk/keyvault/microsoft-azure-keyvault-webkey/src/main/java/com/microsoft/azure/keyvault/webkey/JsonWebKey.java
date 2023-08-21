@@ -607,7 +607,7 @@ public class JsonWebKey {
         try {
             ECPublicKeySpec pubSpec = new ECPublicKeySpec(ecPoint, curveSpec);
             KeyFactory kf = provider != null ? KeyFactory.getInstance("EC", provider)
-                    : KeyFactory.getInstance("EC", "SunEC");
+                    : KeyFactory.getInstance("EC", "BC");
             return (ECPublicKey) kf.generatePublic(pubSpec);
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException(e);
@@ -618,7 +618,7 @@ public class JsonWebKey {
         try {
             ECPrivateKeySpec priSpec = new ECPrivateKeySpec(new BigInteger(1, d), curveSpec);
             KeyFactory kf = provider != null ? KeyFactory.getInstance("EC", provider)
-                    : KeyFactory.getInstance("EC", "SunEC");
+                    : KeyFactory.getInstance("EC", "BC");
             return (ECPrivateKey) kf.generatePrivate(priSpec);
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException(e);
@@ -771,7 +771,7 @@ public class JsonWebKey {
 
         if (provider == null) {
             // Our default provider for this class
-            provider = Security.getProvider("SunEC");
+            provider = Security.getProvider("BC");
         }
 
         if (!JsonWebKeyType.EC.equals(kty) && !JsonWebKeyType.EC_HSM.equals(kty)) {

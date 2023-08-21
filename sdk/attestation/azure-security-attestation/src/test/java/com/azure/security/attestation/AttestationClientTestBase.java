@@ -353,7 +353,7 @@ public class AttestationClientTestBase extends TestProxyTestBase {
 
         KeyPairGenerator keyGen;
         if ("EC".equals(algorithm)) {
-            keyGen = KeyPairGenerator.getInstance(algorithm, Security.getProvider("SunEC"));
+            keyGen = KeyPairGenerator.getInstance(algorithm, Security.getProvider("BC"));
         } else {
             keyGen = KeyPairGenerator.getInstance(algorithm);
         }

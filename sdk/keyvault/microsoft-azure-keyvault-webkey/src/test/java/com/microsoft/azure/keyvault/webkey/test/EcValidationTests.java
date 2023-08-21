@@ -58,7 +58,7 @@ public class EcValidationTests {
     }
 
     private static void validateEcKey(KeyPair keyPair, JsonWebKey key) throws Exception {
-        JsonWebKey jsonWebKey = JsonWebKey.fromEC(keyPair, Security.getProvider("SunEC"));
+        JsonWebKey jsonWebKey = JsonWebKey.fromEC(keyPair, Security.getProvider("BC"));
         boolean includePrivateKey = keyPair.getPrivate() != null;
         KeyPair keyPair2 = jsonWebKey.toEC(includePrivateKey);
 
@@ -79,7 +79,7 @@ public class EcValidationTests {
     }
 
     private static void signVerify(PublicKey publicKey, PrivateKey privateKey, JsonWebKeyCurveName curve) throws InvalidKeyException, NoSuchAlgorithmException, SignatureException {
-        Signature signature = Signature.getInstance(CURVE_TO_SIGNATURE.get(curve), Security.getProvider("SunEC"));
+        Signature signature = Signature.getInstance(CURVE_TO_SIGNATURE.get(curve), Security.getProvider("BC"));
         signature.initSign(privateKey);
         MessageDigest digest = MessageDigest.getInstance(algorithm.get(curve));
         byte[] plaintext = new byte[10];

@@ -92,7 +92,7 @@ public class EcKey implements IKey {
      * @throws InvalidAlgorithmParameterException
      */
     public EcKey(String kid) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        this(kid, getDefaultCurve(), Security.getProvider("SunEC"));
+        this(kid, getDefaultCurve(), Security.getProvider("BC"));
     }
 
     /**
@@ -105,7 +105,7 @@ public class EcKey implements IKey {
      * @throws InvalidAlgorithmParameterException
      */
     public EcKey(String kid, JsonWebKeyCurveName curve) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        this(kid, curve, Security.getProvider("SunEC"));
+        this(kid, curve, Security.getProvider("BC"));
     }
 
     /**
@@ -147,7 +147,7 @@ public class EcKey implements IKey {
      * @throws InvalidAlgorithmParameterException
      */
     public EcKey(String kid, KeyPair keyPair) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-        this(kid, keyPair, Security.getProvider("SunEC"));
+        this(kid, keyPair, Security.getProvider("BC"));
     }
 
     /**
@@ -338,7 +338,7 @@ public class EcKey implements IKey {
 
     @Override
     public ListenableFuture<Pair<byte[], String>> signAsync(byte[] digest, String algorithm) throws NoSuchAlgorithmException {
-        
+
         if (keyPair.getPrivate() == null) {
             throw new UnsupportedOperationException("Sign is not supported without a private key.");
         }
@@ -357,7 +357,7 @@ public class EcKey implements IKey {
         if (baseAlgorithm == null || !(baseAlgorithm instanceof AsymmetricSignatureAlgorithm)) {
             throw new NoSuchAlgorithmException(algorithm);
         }
-       
+
         Ecdsa algo = (Ecdsa) baseAlgorithm;
         ISignatureTransform signer = algo.createSignatureTransform(keyPair, provider);
 
@@ -381,15 +381,15 @@ public class EcKey implements IKey {
 
         // Interpret the requested algorithm
         Algorithm baseAlgorithm = AlgorithmResolver.Default.get(algorithm);
-        
+
         if (baseAlgorithm == null || !(baseAlgorithm instanceof AsymmetricSignatureAlgorithm)) {
             throw new NoSuchAlgorithmException(algorithm);
         }
-        
+
         Ecdsa algo = (Ecdsa) baseAlgorithm;
 
         ISignatureTransform signer = algo.createSignatureTransform(keyPair, provider);
-        
+
         try {
             return Futures.immediateFuture(signer.verify(digest, signature));
         } catch (Exception e) {
